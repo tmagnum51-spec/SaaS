@@ -42,7 +42,6 @@ export default function LoginForm() {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Connexion</h2>
         
         {/* Affichage des erreurs géré via CSS Modules */}
         {error && <p className={styles.error}>{error}</p>}

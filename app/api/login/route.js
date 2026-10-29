@@ -4,7 +4,7 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // 1. Appel vers votre vrai backend (remplacez l'URL par celle de votre backend)
+    // 1. Appel vers le backend 
     const backendResponse = await fetch('http://localhost:8000/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -13,7 +13,7 @@ export async function POST(request) {
 
     const data = await backendResponse.json();
 
-    // 2. Gestion des erreurs renvoyées par le backend (ex: 401 Identifiants invalides)
+    // 2. Gestion des erreurs renvoyées par le backend 
     if (!backendResponse.ok || !data.success) {
       return NextResponse.json(
         { 
@@ -25,7 +25,7 @@ export async function POST(request) {
       );
     }
 
-    // 3. Récupération du token depuis la structure de votre API
+    // 3. Récupération du token depuis l'API
     const token = data.data.token;
 
     // 4. Création de la réponse et stockage du token dans un Cookie HttpOnly sécurisé

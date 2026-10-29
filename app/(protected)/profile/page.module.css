@@ -1,0 +1,97 @@
+.container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #111;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 0 0.3rem 0;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  background-color: #fff;
+  color: #333;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #1a1a1a;
+}
+
+.buttonContainer {
+  margin-top: 1rem;
+}
+
+.submitButton {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #333;
+}
+
+.logoutContainer {
+  margin-top: 3rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0;
+}
+
+.logoutButton:hover {
+  text-decoration: underline;
+}

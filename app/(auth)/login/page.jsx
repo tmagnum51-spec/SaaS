@@ -27,7 +27,7 @@ export default function LoginPage() {
         <div />
       </div>
 
-      {/* Colonne de droite (Image illustrative depuis public/assets/img/login.jpg) */}
+      {/* Colonne de droite (Image illustrative) */}
       <div 
         className={styles.rightSection} 
         style={{ backgroundImage: `url('/assets/img/login.jpg')` }} 

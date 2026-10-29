@@ -1,7 +1,12 @@
+"use client"
+import {usePathname} from "next/navigation"
 import Link from 'next/link'
 import styles from './Navigation.module.css'
 
 export default function Navigation() {
+  const pathname = usePathname()
+if (pathname=="/login"  || pathname=="/register")
+  return null
  return (
    <nav className={styles.nav}>
      <div className={styles.container}>
