@@ -95,3 +95,8 @@
 .logoutButton:hover {
   text-decoration: underline;
 }
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666; /* Optionnel : pour adapter la couleur */
+}

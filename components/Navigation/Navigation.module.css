@@ -71,3 +71,42 @@
   font-weight: bold;
   font-size: 0.9rem;
 }
+/* Style de base des liens du menu */
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  color: #D3590B; /* Couleur orange par défaut */
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+/* État actif : Fond noir et texte/icônes en blanc */
+.link.active {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* Bouton profil "AD" (par défaut) */
+.profileButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #fcedea; /* Teinte claire de fond */
+  color: #D3590B;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Bouton profil "AD" lorsque l'on se trouve sur la page compte (/a-propos) */
+.profileButton.activeProfile {
+  background-color: #D3590B;
+  color: #ffffff;
+}

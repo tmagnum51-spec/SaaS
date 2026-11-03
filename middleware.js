@@ -23,5 +23,5 @@ export function middleware(request) {
 
 // 3. Indiquez au matcher toutes les routes à intercepter
 export const config = {
-  matcher: ['/profile/:path*', '/dashboard/:path*', '/projets/:path*','/a-propos/:path*', '/login'],
+  matcher: ['/profile/:path*', '/dashboard/:path*', '/projets/:path*', '/a-propos/:path*', '/profile/:path*', '/login'],
 };

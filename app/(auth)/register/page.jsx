@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import styles from './page.module.css';
-import LoginForm from '@/components/LoginForm/LoginForm';
+import RegisterForm from '@/components/RegisterForm/RegisterForm';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className={styles.pageContainer}>
       {/* Colonne de gauche (Formulaire) */}
@@ -14,14 +14,15 @@ export default function LoginPage() {
         </div>
 
         <div className={styles.formContainer}>
-          <h1 className={styles.title}>Connexion</h1>
+          <h1 className={styles.title}>Inscription</h1>
           
           {/* Formulaire de connexion */}
-          <LoginForm />
-
+          <RegisterForm />
           <p className={styles.footerText}>
-            Pas encore de compte ? <Link href="/register" className={styles.link}>S'inscrire</Link>
+            Déjà inscrit ? <Link href="/Login" className={styles.link}>Se connecter</Link>
           </p>
+
+
         </div>
 
         <div />
