@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './LoginForm.module.css'; // Ajustez le chemin selon l'emplacement de votre fichier CSS
+import styles from './LoginForm.module.css';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -11,9 +11,28 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Fonction utilitaire pour valider le format d'un e-mail
+  const isValidEmail = (emailStr) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(emailStr);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // 1. Vérification que les champs ne sont pas vides 
+    if (!email.trim() || !password.trim()) {
+      setError('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    // 2. Vérification que l'e-mail correspond bien au format 
+    if (!isValidEmail(email)) {
+      setError('Veuillez entrer une adresse e-mail valide.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -41,7 +60,7 @@ export default function LoginForm() {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} noValidate>
         
         {/* Affichage des erreurs géré via CSS Modules */}
         {error && <p className={styles.error}>{error}</p>}
@@ -54,7 +73,6 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="user@example.com"
-            required
           />
         </div>
 
@@ -66,7 +84,6 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password123!"
-            required
           />
         </div>
 
