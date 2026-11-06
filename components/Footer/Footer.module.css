@@ -6,8 +6,8 @@
   padding: 1.5rem 2rem; /* Ajustez selon vos marges habituelles */
   border-top: 1px solid #eaeaea; /* Optionnel : une fine ligne de séparation au-dessus du footer */
   font-family: inherit;
-  max-width: 1200px;
   margin: 0 auto;
+  background-color: white;
 }
 
 .logo {

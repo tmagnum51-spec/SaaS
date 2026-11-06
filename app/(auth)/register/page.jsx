@@ -19,7 +19,7 @@ export default function RegisterPage() {
           {/* Formulaire de connexion */}
           <RegisterForm />
           <p className={styles.footerText}>
-            Déjà inscrit ? <Link href="/Login" className={styles.link}>Se connecter</Link>
+            Déjà inscrit ? <Link href="/" className={styles.link}>Se connecter</Link>
           </p>
 
 
