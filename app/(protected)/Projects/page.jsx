@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
-import ProjectsList from '@/components/Projects/Projects';
+import ProjectsList from '@/components/Projects/ProjectsList';
 import styles from './page.module.css';
 import ProjectHeader from '@/components/ProjectHeader/ProjectHeader';
+
 
 async function fetchUserData(token) {
   const res = await fetch('http://localhost:8000/auth/profile', {
@@ -45,16 +46,13 @@ console.log("CE QUE CONTIENT 'user' :", user);
   const fullName = user?.name || 'Utilisateur par défaut';
 
   return (
-    <ProjectsHeader projects={projects} user={user} />
-  
-    // <div className={styles.dashboardContainer}>
-    //   <h1 className={styles.welcomeTitle}>
-    //     Bonjour {fullName}, voici un aperçu de vos projets et tâches
-    //   </h1>
-      
-    //   {/* On passe le tableau de tâches propre au composant TaskList */}
-    //   {/* <TaskList tasks={tasks} /> */}
-    // </div>
+    <div className={styles.dashboardContainer}>
+        <div className={styles.dashboardHeader}>
+          <ProjectHeader />
+        </div>  
+      {/* Passage direct des projets au composant */}
+      <ProjectsList projects={projects} />
+    </div>
   );
 }
 

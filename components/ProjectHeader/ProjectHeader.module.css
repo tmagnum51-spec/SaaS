@@ -1,23 +1,23 @@
 .dashboardContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0px;
   width: 100%;
   max-width: 1240px;
-  margin: 0 auto;
-  padding: 100px 
+  margin: 64 auto 20 ;
+  padding: 00px 
 }
 .DashboardTitle{
   font-size: 24px;
   font-weight: 600;
-  color: #111827;
-  margin: 0;
+  color: #000000;
+ 
 }
 .welcomeTitle {
   font-size: 18px;
   font-weight: 400;
-  color: #111827;
-  margin: 0;
+  color: #000000;
+
 }
 
 .toolbar {
