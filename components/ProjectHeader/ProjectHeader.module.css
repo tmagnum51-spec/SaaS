@@ -1,0 +1,118 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 100px 
+}
+.DashboardTitle{
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.welcomeTitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: #111827;
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+}
+
+/* Style de base pour les deux boutons */
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 0px solid #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+}
+
+/* Style appliqué uniquement au bouton ACTIF (quand il est sélectionné) */
+.active {
+  background-color: rgba(255, 232, 217, 1); /* Orange très clair */
+  border-color: #ffedd5;
+  color: #f97316; /* Orange vif pour le texte */
+}
+.projectButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background-color: #111827; /* Fond sombre comme sur la maquette */
+  color: #ffffff;            /* Texte blanc */
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;     /* Supprime le soulignement par défaut des Link */
+  transition: background-color 0.2s ease;
+}
+
+.projectButton:hover {
+  background-color: #1f2937; /* Légèrement plus clair au survol */
+}
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+
+/* Conteneur de la barre d'outils (boutons Liste / Kanban) */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+/* Style de base des boutons */
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background-color: #ffedd5;
+  border-color: #ffedd5;
+}
+
+/* Style appliqué au bouton ACTIF (sélectionné) */
+.active {
+  background-color: #ffedd5; /* Orange très clair */
+  border-color: #ffedd5;
+  color: #f97316; /* Texte orange vif */
+}
+
+.content {
+  width: 100%;
+  margin-top: 10px;
+}

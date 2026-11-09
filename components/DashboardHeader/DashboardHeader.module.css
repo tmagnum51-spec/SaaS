@@ -3,11 +3,19 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 100px 
 }
-
-.welcomeTitle {
+.DashboardTitle{
   font-size: 24px;
   font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.welcomeTitle {
+  font-size: 18px;
+  font-weight: 400;
   color: #111827;
   margin: 0;
 }
@@ -24,23 +32,23 @@
   gap: 8px;
   padding: 8px 16px;
   background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 0px solid #ffffff;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
-  color: #4b5563;
+  color: #ffffff;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .button:hover {
   background-color: #f9fafb;
-  border-color: #d1d5db;
+  border-color: #f9fafb;
 }
 
 /* Style appliqué uniquement au bouton ACTIF (quand il est sélectionné) */
 .active {
-  background-color: #fff7ed; /* Orange très clair */
+  background-color: rgba(255, 232, 217, 1); /* Orange très clair */
   border-color: #ffedd5;
   color: #f97316; /* Orange vif pour le texte */
 }
@@ -68,12 +76,6 @@
   width: 100%;
 }
 
-.welcomeTitle {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
 
 /* Conteneur de la barre d'outils (boutons Liste / Kanban) */
 .toolbar {
@@ -89,7 +91,7 @@
   gap: 8px;
   padding: 8px 16px;
   background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #ffffff;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
@@ -99,13 +101,13 @@
 }
 
 .button:hover {
-  background-color: #f9fafb;
-  border-color: #d1d5db;
+  background-color: #ffedd5;
+  border-color: #ffedd5;
 }
 
 /* Style appliqué au bouton ACTIF (sélectionné) */
 .active {
-  background-color: #fff7ed; /* Orange très clair */
+  background-color: #ffedd5; /* Orange très clair */
   border-color: #ffedd5;
   color: #f97316; /* Texte orange vif */
 }

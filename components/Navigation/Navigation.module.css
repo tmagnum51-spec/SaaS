@@ -40,7 +40,9 @@
 }
 
 .link:hover {
-  background-color: #fff5f0;
+  background-color: #000000;
+  color: #ffffff;
+  
 }
 
 /* Style pour l'élément actif (ex: Projets) */

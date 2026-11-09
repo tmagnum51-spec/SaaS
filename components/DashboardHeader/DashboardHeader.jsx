@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styles from './DashboardHeader.module.css';
 import TaskList from '../TaskList/TaskList';
+import TaskKanban from '../TaskKanban/TaskKanban';
 // On retire l'import de Kanban pour l'instant
 
 export default function DashboardHeader({ tasks, user }) {
@@ -11,10 +12,14 @@ export default function DashboardHeader({ tasks, user }) {
   return (
     <>
       <div className={styles.dashboardContainer}>
-        <h1 className={styles.welcomeTitle}>
-          Bonjour {fullName}, voici un aperçu de vos projets et tâches
+        <h1 className={styles.DashboardTitle}> 
+            Tableau de bord
         </h1>
-      </div>
+        <h2 className={styles.welcomeTitle}>  
+          Bonjour {fullName}, voici un aperçu de vos projets et tâches
+        </h2>
+        
+      
 
       <div className={styles.toolbar}>
         <button
@@ -34,8 +39,11 @@ export default function DashboardHeader({ tasks, user }) {
         {taskDisplay === 'list' ? (
           <TaskList tasks={tasks} />
         ) : (
-          <p>Vue Kanban en cours de développement...</p>
+          (
+          <TaskKanban tasks={tasks} />
+        )
         )}
+        </div>
       </div>
     </>
   );

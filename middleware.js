@@ -5,7 +5,7 @@ export function middleware(request) {
   const currentPath = request.nextUrl.pathname;
 
   // 1. Définissez ici toutes les routes qui nécessitent d'être connecté
-  const protectedRoutes = ['/profile', '/dashboard', '/projets', '/a-propos'];
+  const protectedRoutes = ['/profile', '/dashboard', '/projects', '/a-propos'];
   const isProtectedRoute = protectedRoutes.some((route) => currentPath.startsWith(route));
 
   // Si c'est une route protégée et qu'il n'y a pas de token -> Redirection vers /login
@@ -23,5 +23,5 @@ export function middleware(request) {
 
 // 3. Indiquez au matcher toutes les routes à intercepter
 export const config = {
-  matcher: ['/profile/:path*', '/dashboard/:path*', '/projets/:path*', '/a-propos/:path*', '/profile/:path*', '/login'],
+  matcher: ['/profile/:path*', '/dashboard/:path*', '/projects/:path*', '/a-propos/:path*', '/profile/:path*', '/login'],
 };
