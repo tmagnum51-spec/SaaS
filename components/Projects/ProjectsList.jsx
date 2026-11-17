@@ -1,4 +1,5 @@
 import styles from './ProjectsList.module.css';
+import Link from 'next/link';
 
 export default function ProjectsList({ projects }) {
   // 1. Si le tableau est vide ou inexistant, on affiche le message et on STOPPE tout ici
@@ -15,7 +16,6 @@ export default function ProjectsList({ projects }) {
   // 2. Si on arrive ici, c'est qu'il y a des projets : on affiche la liste normalement
   return (
     <div className={styles.projectscontainer}>
-      
       <div className={styles.projectsGrid}>
         {projects.map((project) => {
           // Exemple de calcul ou valeurs par défaut si les tâches ne sont pas encore gérées dans l'API projets
@@ -24,7 +24,10 @@ export default function ProjectsList({ projects }) {
           const progressPercentage = 0;
 
           return (
-            <div key={project.id} className={styles.projectCard}>
+            <Link 
+            key={project.id}
+            href={`/projects/${project.id}`} 
+            className={styles.projectCard}>
               <div className={styles.cardContent}>
                 
                 {/* En-tête : Titre et Description */}
@@ -83,7 +86,7 @@ export default function ProjectsList({ projects }) {
                 </div>
 
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

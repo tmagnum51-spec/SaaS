@@ -1,11 +1,38 @@
 "use client";
-
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import styles from './Navigation.module.css';
 
+
+
 export default function Navigation() {
   const pathname = usePathname();
+  const [user, setUser] = useState(null);
+
+  useEffect (() => {
+    async function fetchUserProfile(){
+       try {
+    const res = await fetch('http://localhost:8000/auth/profile', {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` },
+      cache: 'no-store',
+    });
+    
+    if (!res.ok) return null;
+    const data = await res.json();
+    
+    // Le backend renvoie { success: true, data: { email: "...", ... } }
+    return data?.data?.name || null; 
+  } catch (error) {
+    return null;
+  }
+
+    }
+  }
+
+  )
+
 
   if (pathname === "/login" || pathname === "/register") {
     return null;

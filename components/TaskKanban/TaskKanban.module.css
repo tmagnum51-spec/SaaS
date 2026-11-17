@@ -83,14 +83,14 @@
 }
 
 .taskTitle {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
-  color: #000000;
+  color: #1f1f1f;
   margin: 0 0 4px 0;
 }
 
 .taskDescription {
-  font-size: 13px;
+  font-size: 14px;
   color: #6b7280;
   margin: 0;
   line-height: 1.4;
@@ -132,13 +132,33 @@
 .metaInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 12px;
-  color: #6b7280;
+  gap: 4px;
+  font-size: 13px;
+  color: #6b7280; /* Le gris doux que vous avez */
 }
 
+/* Chaque élément du bloc méta */
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Espace entre l'icône et le texte */
+}
+
+/* Style et taille des icônes SVG */
+.icon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280; /* Même couleur grise */
+}
+
+/* Ajoute une petite barre verticale "|" entre chaque bloc, sauf le premier */
+.metaItem:not(:first-child)::before {
+  content: "|";
+  margin-right: 12px;
+  color: #d1d5db; /* Un gris un peu plus clair pour la barre de séparation */
+}
 .viewButton {
-  background-color: #000000;
+  background-color: #1f1f1f;
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -147,7 +167,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  width: 100%;
+  width: 40%;
   text-align: center;
 }
 

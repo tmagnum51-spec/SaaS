@@ -10,13 +10,13 @@
 .DashboardTitle{
   font-size: 24px;
   font-weight: 600;
-  color: #000000;
+  color: #1f1f1f;
  
 }
 .welcomeTitle {
   font-size: 18px;
   font-weight: 400;
-  color: #000000;
+  color: #1f1f1f;
 
 }
 
@@ -115,4 +115,27 @@
 .content {
   width: 100%;
   margin-top: 10px;
+}
+.openButton {
+
+  background-color: #1f1f1f;
+  justify-content: space-between;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 181px;
+  height: 50px;
+  text-align: center;
+}
+.headerTop {
+  display: flex;
+  justify-content: space-between; /* Pousse les éléments aux deux extrémités (gauche et droite) */
+  align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
+  width: 100%;
+  margin-bottom: 2rem;
 }

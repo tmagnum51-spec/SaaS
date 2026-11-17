@@ -24,7 +24,7 @@
 .sectionTitle {
   font-size: 18px;
   font-weight: 600;
-  color: #111827;
+  color: #1f1f1f;
   margin: 0;
 }
 
@@ -80,9 +80,9 @@
 }
 
 .taskTitle {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  color: #111827;
+  color: #1f1f1f;
   margin: 0 0 4px 0;
 }
 
@@ -127,7 +127,7 @@
 
 /* Bouton "Voir" noir de la maquette */
 .viewButton {
-  background-color: #111827;
+  background-color: #1f1f1f;
   color: #ffffff;
   border: none;
   border-radius: 6px;

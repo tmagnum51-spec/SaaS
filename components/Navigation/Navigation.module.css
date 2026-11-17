@@ -40,14 +40,14 @@
 }
 
 .link:hover {
-  background-color: #000000;
+  background-color: #1f1f1f;
   color: #ffffff;
   
 }
 
 /* Style pour l'élément actif (ex: Projets) */
 .active {
-  background-color: #000000;
+  background-color: #1f1f1f;
   color: #ffffff;
 }
 
@@ -111,4 +111,9 @@
 .profileButton.activeProfile {
   background-color: #D3590B;
   color: #ffffff;
+}
+.profileButton:hover {
+background-color: #1f1f1f;
+color: #ffffff;
+
 }

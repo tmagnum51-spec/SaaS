@@ -116,3 +116,26 @@
   width: 100%;
   margin-top: 10px;
 }
+.headerTop {
+  display: flex;
+  justify-content: space-between; /* Pousse les éléments aux deux extrémités (gauche et droite) */
+  align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.openButton {
+
+  background-color: #1f1f1f;
+  justify-content: space-between;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 181px;
+  height: 50px;
+  text-align: center;
+}
