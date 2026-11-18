@@ -1,53 +1,49 @@
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Création du contexte
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //fonction de fetch encapsulée
-  const fetchUserData = async (token) => {
+  // Fonction centralisée pour récupérer le profil utilisateur
+  const fetchUser = async () => {
     try {
+      // On appelle une route Next.js (ou directement Express si le CORS/Proxy est géré)
+      // Si votre API Express gère les cookies avec credentials: 'include' :
       const res = await fetch('http://localhost:8000/auth/profile', {
-        headers: { Authorization: `Bearer ${token}` },
+        credentials: 'include', // 👈 Indispensable pour envoyer le cookie HttpOnly vers Express
         cache: 'no-store',
       });
-      if (!res.ok) return null;
+
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
       const json = await res.json();
-      return json?.data?.user || null;
+      const userData = json?.data?.user || json?.user || null;
+      setUser(userData);
     } catch (error) {
       console.error("Erreur lors de la récupération du profil :", error);
-      return null;
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Au chargement de l'application, on vérifie si un token existe
   useEffect(() => {
-    const initAuth = async () => {
-      // Par exemple, si vous stockez le token dans le localStorage après le login
-      const token = localStorage.getItem('token'); 
-      
-      if (token) {
-        const userData = await fetchUserData(token);
-        setUser(userData);
-      }
-      setLoading(false);
-    };
-
-    initAuth();
+    fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, fetchUserData, loading }}>
+    <AuthContext.Provider value={{ user, setUser, fetchUser, loading }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Hook personnalisé pour consommer facilement le contexte partout
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {

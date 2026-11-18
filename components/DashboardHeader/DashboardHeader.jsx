@@ -4,11 +4,18 @@ import styles from './DashboardHeader.module.css';
 import TaskList from '../TaskList/TaskList';
 import TaskKanban from '../TaskKanban/TaskKanban';
 import CreateProjectModal from '../CreateProjectModal/CreateProjectModal';
+import { useAuth } from '@/app/context/AuthContext';
 // On retire l'import de Kanban pour l'instant
 
-export default function DashboardHeader({ tasks, user }) {
+export default function DashboardHeader({ tasks }) {
+  const {user, loading:authLoading} = useAuth();
+  console.log("🔍 Objet user complet dans le contexte :", user);
+  console.log("⏳ État du loading auth :", authLoading);
   const [taskDisplay, setTaskDisplay] = useState('list');
-  const fullName = user?.name || 'Utilisateur'; 
+   
+  const fullName = user?.name || null; 
+
+  console.log ("ce que contient fullname :", fullName);
 
   // 1. Déclaration de l'état pour contrôler l'ouverture de la modale (fermée par défaut)
   const [isModalOpen, setIsModalOpen] = useState(false);
