@@ -49,8 +49,8 @@ export default function LoginForm() {
       }
 
       // Redirection vers la page de profil protégée
-      router.push('/profile');
-      router.refresh();
+      window.location.href = '/profile';
+      
     } catch (err) {
       setError(err.message);
     } finally {
