@@ -1,9 +1,10 @@
 import styles from './ProjectsList.module.css';
 import Link from 'next/link';
 
+
 export default function ProjectsList({ projects }) {
   // 1. Si le tableau est vide ou inexistant, on affiche le message et on STOPPE tout ici
-  console.log("🔍 [DEBUG TaskList] Tasks reçues :", projects);
+  console.log("🔍 [DEBUG TaskList] Tasks reçues ici :", projects);
   if (projects === undefined) {
     return <p className={styles.noTasks}>Chargement des projets...</p>;
   }
@@ -19,9 +20,12 @@ export default function ProjectsList({ projects }) {
       <div className={styles.projectsGrid}>
         {projects.map((project) => {
           // Exemple de calcul ou valeurs par défaut si les tâches ne sont pas encore gérées dans l'API projets
-          const completedTasksCount = 0; 
-          const totalTasksCount = 2;
-          const progressPercentage = 0;
+          
+          const totalTasks = project.totalTasks ?? 0;
+          const completedTasks = project.completedTasks ?? 0;
+          const progressPercentage = totalTasks > 0
+  ? Math.round((completedTasks / totalTasks) * 100)
+  : 0;;
 
           return (
             <Link 
@@ -49,7 +53,7 @@ export default function ProjectsList({ projects }) {
                     ></div>
                   </div>
                   <span className={styles.tasksCountText}>
-                    {completedTasksCount}/{totalTasksCount} tâches terminées
+                    {completedTasks}/{totalTasks} tâches terminées
                   </span>
                 </div>
 

@@ -27,17 +27,7 @@
   padding: 0;
 }
 
-.link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: #D3590B;
-  font-weight: 500;
-  padding: 0.6rem 1rem;
-  border-radius: 12px;
-  transition: background-color 0.2s ease;
-}
+
 
 .link:hover {
   background-color: #1f1f1f;
@@ -54,6 +44,8 @@
 .active svg path {
   fill: #ffffff;
 }
+
+
 
 /* Cercle de profil à droite */
 .profile {

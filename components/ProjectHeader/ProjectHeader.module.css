@@ -1,23 +1,23 @@
 .dashboardContainer {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 24px;
   width: 100%;
   max-width: 1240px;
-  margin: 64 auto 20 ;
-  padding: 00px 
+  margin: 0 auto;
+  padding: 100px 
 }
 .DashboardTitle{
   font-size: 24px;
   font-weight: 600;
-  color: #1f1f1f;
- 
+  color: #111827;
+  margin: 0;
 }
 .welcomeTitle {
   font-size: 18px;
   font-weight: 400;
-  color: #1f1f1f;
-
+  color: #111827;
+  margin: 0;
 }
 
 .toolbar {
@@ -116,6 +116,13 @@
   width: 100%;
   margin-top: 10px;
 }
+.headerTop {
+  display: flex;
+  justify-content: space-between; /* Pousse les éléments aux deux extrémités (gauche et droite) */
+  align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
+  width: 100%;
+  margin-bottom: 2rem;
+}
 .openButton {
 
   background-color: #1f1f1f;
@@ -131,11 +138,4 @@
   width: 181px;
   height: 50px;
   text-align: center;
-}
-.headerTop {
-  display: flex;
-  justify-content: space-between; /* Pousse les éléments aux deux extrémités (gauche et droite) */
-  align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
-  width: 100%;
-  margin-bottom: 2rem;
 }

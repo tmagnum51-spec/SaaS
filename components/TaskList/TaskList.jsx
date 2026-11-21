@@ -1,3 +1,4 @@
+import TaskCard from '../TaskCard/TaskCard';
 import styles from './TaskList.module.css';
 
 export default function TaskList({ tasks }) {
@@ -32,40 +33,9 @@ export default function TaskList({ tasks }) {
       </div>
 
       <div className={styles.cardsWrapper}>
-        {tasks.map((task) => {
-          const formattedDate = task.dueDate 
-            ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) 
-            : 'Aucune date';
-
-          const isInProgress = task.status === 'IN_PROGRESS';
-          const isDone = task.status === 'DONE';
-
-          return (
-            <div key={task.id} className={styles.taskCard}>
-              <div className={styles.cardContent}>
-                <div className={styles.cardHeader}>
-                  <div>
-                    <h3 className={styles.taskTitle}>{task.title}</h3>
-                    <p className={styles.taskDescription}>{task.description}</p>
-                  </div>
-                  
-                  <span className={`${styles.badge} ${isInProgress ? styles.inProgress : styles.todo}`}>
-                    {isInProgress ? 'En cours' : isDone ? 'Terminé' : 'À faire'}
-                  </span>
-                </div>
-
-                <div className={styles.cardFooter}>
-                  <div className={styles.metaInfo}>
-                    <span>📁 Projet ID: {task.projectId ? task.projectId.slice(0, 6) + '...' : 'Général'}</span>
-                    <span>📅 {formattedDate}</span>
-                    <span>💬 {task.comments ? task.comments.length : 0}</span>
-                  </div>
-                  <button className={styles.viewButton}>Voir</button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))}
       </div>
     </div>
   );
