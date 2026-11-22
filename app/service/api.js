@@ -1,8 +1,13 @@
 const BASE_URL = "http://localhost:8000/api";
 
 export async function getProjectsByUser(token) {
+
+    const headers = {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
   const res = await fetch("http://localhost:8000/projects", {
-    headers: { Authorization: `Bearer ${token}` },
+    headers, credentials: "include",
     cache: "no-store",
   });
   if (!res.ok) return null;

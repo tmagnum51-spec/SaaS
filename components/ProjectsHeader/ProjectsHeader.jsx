@@ -5,10 +5,9 @@ import CreateProjectModal from '../CreateProjectModal/CreateProjectModal';
 
 // On retire l'import de Kanban pour l'instant
 
-export default function ProjectsHeader({ project }) {
+export default function ProjectsHeader() {
 
-  const projectName = project?.name || 'Projet'; 
-    // 1. Déclaration de l'état pour contrôler l'ouverture de la modale (fermée par défaut)
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectDisplay, setProjectDisplay] = useState('list');
 

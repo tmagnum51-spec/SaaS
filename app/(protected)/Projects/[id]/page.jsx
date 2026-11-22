@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import styles from './page.module.css';
 import TaskCard from '@/components/TaskCard/TaskCard';
+import ProjectHeader from '@/components/ProjectHeader/ProjectHeader';
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -61,21 +62,29 @@ export default function ProjectPage() {
   const progressPercent = Math.round((completedCount / tasks.length) * 100);
 
   return (
-    <div className={styles.taskListContainer}>
-      <div className={styles.headerSection}>
-        <div>
-          <h2 className={styles.sectionTitle}>Tâches du projet</h2>
-          <p className={styles.sectionSubtitle}>
-            {completedCount} / {tasks.length} terminées ({progressPercent}%)
-          </p>
+    <>
+
+
+      <div>
+        <ProjectHeader />
+      </div>
+    
+      <div className={styles.taskListContainer}>
+        <div className={styles.headerSection}>
+          <div>
+            <h2 className={styles.sectionTitle}>Tâches du projet</h2>
+            <p className={styles.sectionSubtitle}>
+              {completedCount} / {tasks.length} terminées ({progressPercent}%)
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.cardsWrapper}>
+          {tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
         </div>
       </div>
-
-      <div className={styles.cardsWrapper}>
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

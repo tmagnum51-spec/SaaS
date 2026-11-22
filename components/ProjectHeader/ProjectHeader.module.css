@@ -1,3 +1,105 @@
+.openButton {
+
+  background-color: #1f1f1f;
+  justify-content: space-between;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 181px;
+  height: 50px;
+  text-align: center;
+}
+.contributorsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.contributorsLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.contributorsLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #18181b;
+}
+
+.contributorsCount {
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.contributorsRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ownerGroup,
+.memberGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ownerAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background-color: #fde8dc;
+  color: #ea580c;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ownerPill {
+  background-color: #fde8dc;
+  color: #ea580c;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 9999px;
+}
+
+.memberAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #18181b;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memberPill {
+  background-color: #e5e7eb;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 9999px;
+}
 .dashboardContainer {
   display: flex;
   flex-direction: column;
@@ -69,13 +171,6 @@
 .projectButton:hover {
   background-color: #1f2937; /* Légèrement plus clair au survol */
 }
-.dashboardContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
 
 /* Conteneur de la barre d'outils (boutons Liste / Kanban) */
 .toolbar {
@@ -122,6 +217,14 @@
   align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
   width: 100%;
   margin-bottom: 2rem;
+}
+.TitleDescButton {
+  display: flex;
+  justify-content: space-between; /* Pousse les éléments aux deux extrémités (gauche et droite) */
+  align-items: center;            /* Aligne verticalement le bouton au même niveau que le texte */
+  width: 100%;
+  margin-bottom: 2rem;
+
 }
 .openButton {
 
