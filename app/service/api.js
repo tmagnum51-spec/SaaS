@@ -1,5 +1,75 @@
 const BASE_URL = "http://localhost:8000/api";
 
+export async function updateProfile(profileData, token) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch('http://localhost:8000/auth/profile', {
+    method: 'PUT',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify(profileData),
+  });
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(data?.message || `Erreur mise à jour profil (${res.status})`);
+  }
+
+  return data?.data?.user ?? data;
+}
+
+export async function getAllUsers(token) {
+  const headers = {};
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch('http://localhost:8000/users', {
+    method: 'GET',
+    headers,
+    credentials: 'include',
+    cache: 'no-store',
+  });
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(
+      data?.message || `Erreur lors de la récupération des utilisateurs (${res.status})`
+    );
+  }
+
+  return Array.isArray(data?.data?.users) ? data.data.users : [];
+}
+
+export async function createProjects(projectData, token) {
+    const headers = {'Content-Type': 'application/json',};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const res = await fetch('http://localhost:8000/projects', {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify(projectData),
+  });
+
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    throw new Error(errData?.message || `Erreur lors de la création (${res.status})`);
+  }
+
+  return res.json();
+}
+
 export async function getProjectsByUser(token) {
 
     const headers = {};

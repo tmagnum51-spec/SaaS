@@ -82,7 +82,7 @@
   width: 30px;
   height: 30px;
   border-radius: 9999px;
-  background-color: #ffffff;
+  background-color: #e5e7eb;
   border: 1px solid #e5e7eb;
   color: #18181b;
   font-size: 11px;
@@ -105,7 +105,7 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 100px 
 }
@@ -241,4 +241,9 @@
   width: 181px;
   height: 50px;
   text-align: center;
+}
+.contributorsBar {
+  background-color: rgba(243, 244, 246, 1);
+  min-width: 1140px;
+  
 }
