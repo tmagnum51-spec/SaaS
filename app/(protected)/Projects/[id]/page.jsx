@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
 import styles from './page.module.css';
-import TaskCard from '@/components/TaskCard/TaskCard';
+import TaskCardProject from '@/components/TaskCardProject/TaskCardProject';
 import ProjectHeader from '@/components/ProjectHeader/ProjectHeader';
 
 export default function ProjectPage() {
   const { id } = useParams();
   const { user, loading: authLoading } = useAuth();
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [tasks, setTasks] = useState([]);
   const [loadingTasks, setLoadingTasks] = useState(true);
@@ -63,12 +64,17 @@ export default function ProjectPage() {
 
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
-   const filteredTasks = tasks.filter((task) => {
-    if (!normalizedQuery) return true;
-    const titleMatch = task.title?.toLowerCase().includes(normalizedQuery);
-    const descriptionMatch = task.description?.toLowerCase().includes(normalizedQuery);
-    return titleMatch || descriptionMatch;
-  });
+  const filteredTasks = tasks.filter((task) => {
+  const statusMatch =
+    statusFilter === 'ALL' || task.status === statusFilter;
+
+  if (!statusMatch) return false;
+  if (!normalizedQuery) return true;
+
+  const titleMatch = task.title?.toLowerCase().includes(normalizedQuery);
+  const descriptionMatch = task.description?.toLowerCase().includes(normalizedQuery);
+  return titleMatch || descriptionMatch;
+});
 
   return (
     <>
@@ -86,6 +92,19 @@ export default function ProjectPage() {
               Par ordre de priorité{/* {completedCount} / {tasks.length} terminées ({progressPercent}%) */}
             </p>
             </div>
+           <div className={styles.controlsGroup}>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              aria-label="Filtrer par statut"
+              className={styles.statusSelect}
+            >
+              <option value="ALL">Statut</option>
+              <option value="TODO">À faire</option>
+              <option value="IN_PROGRESS">En cours</option>
+              <option value="DONE">Terminée</option>
+            </select>
+
             <div className={styles.searchBar}>
               <input
                 type="text"
@@ -94,7 +113,6 @@ export default function ProjectPage() {
                 placeholder="Rechercher une tâche"
                 aria-label="Rechercher une tâche"
                 className={styles.searchInput}
-                
               />
               <svg
                 className={styles.searchIcon}
@@ -110,6 +128,7 @@ export default function ProjectPage() {
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </div>
+          </div>
           
         </div>
           
@@ -118,7 +137,7 @@ export default function ProjectPage() {
         ) : (
         <div className={styles.cardsWrapper}>
           {filteredTasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCardProject key={task.id} task={task} />
           ))}
         </div>
       )}

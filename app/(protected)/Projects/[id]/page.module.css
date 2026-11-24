@@ -13,11 +13,33 @@
   align-items: center;
   margin-bottom: 10px;
 }
+.controlsGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+.statusSelect {
+  height: 44px;
+  padding: 0 36px 0 14px;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #ffffff;
+  border: 1px solid #e2e5ea;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  margin: 5px;
+}
 .searchBar
 {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: end;
+  align-items: center;
+  width: 260px;
+  margin: 5px;
   
 }
 .sectionTitle {
@@ -35,7 +57,7 @@
 
 
 .searchInput {
-width: 100%;
+  width: 100%;
   height: 44px;
   padding: 0 42px 0 16px; /* Espace à droite pour ne pas passer sous la loupe */
   font-size: 0.95rem;
@@ -67,12 +89,14 @@ width: 100%;
 
 
 .searchIcon {
-
+position: absolute;
   right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 18px;
   height: 18px;
   color: #7b808a;
-  pointer-events: none; /* Permet de cliquer au travers pour focus l'input */
+  pointer-events: none;
 }
 .cardsWrapper {
   display: flex;
