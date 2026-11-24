@@ -1,6 +1,57 @@
 .taskListContainer {
   display: flex;
   flex-direction: column;
+  
+  background-color: white;
+
+}
+
+.headerSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.searchBar
+{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  
+}
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+
+.searchInput {
+width: 100%;
+  height: 44px;
+  padding: 0 42px 0 16px; /* Espace à droite pour ne pas passer sous la loupe */
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #ffffff;
+  border: 1px solid #e2e5ea;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+.taskBarContainer {
+
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   width: 100%;
   max-width: 1240px;
@@ -14,24 +65,19 @@
   transition: box-shadow 0.2s ease;
 }
 
-.headerSection {
+
+.searchIcon {
+
+  right: 14px;
+  width: 18px;
+  height: 18px;
+  color: #7b808a;
+  pointer-events: none; /* Permet de cliquer au travers pour focus l'input */
+}
+.cardsWrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.sectionTitle {
-  font-size: 18px;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
-
-.sectionSubtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin: 4px 0 0 0;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .searchWrapper {

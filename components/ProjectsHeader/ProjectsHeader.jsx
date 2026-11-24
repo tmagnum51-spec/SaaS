@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import styles from './ProjectsHeader.module.css';
-import CreateProjectModal from '../CreateProjectModal/CreateProjectModal';
+import CreateProjectModal from '../modals/CreateProjectModal';
 
 // On retire l'import de Kanban pour l'instant
 

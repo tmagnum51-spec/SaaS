@@ -1,3 +1,4 @@
+import { getInitials } from '@/app/utils/getInitials';
 import styles from './ProjectsList.module.css';
 import Link from 'next/link';
 
@@ -57,6 +58,8 @@ export default function ProjectsList({ projects }) {
                   </span>
                 </div>
 
+              
+
                 {/* Pied de carte : Équipe et Membres / Rôles */}
                 <div className={styles.cardFooter}>
                   <div className={styles.teamLabel}>
@@ -64,10 +67,12 @@ export default function ProjectsList({ projects }) {
                   </div>
                   <div className={styles.membersList}>
                     {/* Propriétaire */}
-                    <div className={styles.memberBadgeOwner}>
-                      <span className={styles.avatarInitials}>
-                        {project.owner?.name ? project.owner.name.substring(0, 2).toUpperCase() : 'AD'}
+                    <div className={styles.InitialsBadgeOwner}>
+                      <span className={styles.avatarOwnerInitials}>
+                        {getInitials(project.owner?.name)}
                       </span>
+                    </div>
+                    <div className={styles.memberBadgeOwner}>
                       <span className={styles.roleText}>Propriétaire</span>
                     </div>
 
@@ -76,13 +81,11 @@ export default function ProjectsList({ projects }) {
                       // Évite de réafficher le propriétaire s'il est déjà dans members
                       if (member.user?.id === project.owner?.id) return null;
                       
-                      const initials = member.user?.name 
-                        ? member.user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) 
-                        : 'MC';
-
+                      const memberName = member.user?.name 
+                       
                       return (
                         <div key={member.id} className={styles.memberBadge}>
-                          <span className={styles.avatarInitials}>{initials}</span>
+                          <span className={styles.avatarInitials}>{getInitials(memberName)}</span>
                         </div>
                       );
                     })}

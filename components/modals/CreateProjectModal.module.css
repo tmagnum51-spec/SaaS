@@ -1,0 +1,94 @@
+/* 1. Le fond qui couvre tout l'écran et centre le contenu */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond grisé */
+  
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;     /* Centre verticalement */
+  
+  z-index: 1000;
+}
+
+/* 2. La boîte du formulaire au milieu */
+.modalContent {
+  background: white;
+  display: flex;
+  padding: 2rem;
+  border-radius: 8px;
+ 
+  
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  padding: 60px;
+  flex-direction: column;
+}
+.modalHeader{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.input {
+  padding: 20px;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+  margin: 10 auto;
+  flex-direction: column;
+  min-width: 453px;
+}
+.submitBtn {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.label {
+    display: flex;
+    flex-direction: column;
+}
+.selectedChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.contributorChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.removeChipBtn {
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.removeChipBtn:hover {
+  color: #111827;
+}

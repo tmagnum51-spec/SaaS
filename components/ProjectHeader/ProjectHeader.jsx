@@ -6,6 +6,7 @@ import styles from './ProjectHeader.module.css';
 import { useAuth } from '@/app/context/AuthContext';
 import { getProjectsByUser } from '@/app/service/api';
 import CreateTaskModal from '../CreateTaskModal/CreateTaskModal';
+import { getInitials } from '@/app/utils/getInitials';
 
 export default function ProjectHeader({ projectId }) {
   const params = useParams();
@@ -16,12 +17,7 @@ export default function ProjectHeader({ projectId }) {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const getInitials = (name) => {
-  if (!name) return '??';
-  const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-};
+  
 
 const ownerName = project?.owner?.name || 'Propriétaire';
 const otherMembers = (project?.members ?? []).filter(

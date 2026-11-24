@@ -4,16 +4,8 @@ import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import styles from './Navigation.module.css';
 import { useAuth } from "@/app/context/AuthContext";
+import { getInitials } from "@/app/utils/getInitials";
 
-// Fonction utilitaire pour extraire les initiales 
-const getInitials = (name) => {
-  if (!name) return "U"; // Par défaut "U" pour Utilisateur si pas encore chargé
-  const parts = name.trim().split(" ");
-  if (parts.length >= 2) {
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-  }
-  return name.slice(0, 2).toUpperCase();
-};
 
 export default function Navigation() {
   const pathname = usePathname();

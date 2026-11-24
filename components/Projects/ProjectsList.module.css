@@ -133,19 +133,36 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #c2410c;
   background-color: #fff7ed;
   border: 1px solid #ffedd5;
   padding: 4px 8px;
-  border-radius: 6px;
+ 
+  height: 30px;
+  border-radius: 9999px;
+  font-size: 12px;
+
+}.InitialsBadgeOwner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #c2410c;
+  background-color: #fff7ed;
+  border: 1px solid #ffedd5;
+  padding: 4px 8px;
+  width: 36px; 
+  height: 30px;
+  border-radius: 9999px;
   font-size: 12px;
 }
 
-.memberBadgeOwner .avatarInitials {
+
+.avatarOwnerInitials
+{
   font-weight: 600;
   color: #c2410c;
   font-size: 11px;
 }
-
 .roleText {
   color: #c2410c;
   font-weight: 500;
@@ -156,8 +173,10 @@
   display: flex;
   align-items: center;
   background-color: #f3f4f6;
+  width: 30px;
+  height: 30px;
   padding: 4px 8px;
-  border-radius: 6px;
+  border-radius: 9999px;
   font-size: 12px;
 }
 
@@ -165,6 +184,7 @@
   font-weight: 600;
   color: #4b5563;
   font-size: 11px;
+  background-color: #f3f4f6;
 }
 
 .noProjects {
