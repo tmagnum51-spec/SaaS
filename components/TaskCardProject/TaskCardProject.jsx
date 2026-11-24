@@ -1,61 +1,100 @@
-
+import { useState } from 'react';
 import styles from './TaskCardProject.module.css';
-export default function TaskCardProject({task}) {
 
-const formattedDate = task.dueDate 
-    ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) 
+export default function TaskCardProject({ task }) {
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+
+  const formattedDate = task.dueDate
+    ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
     : 'Aucune date';
 
-const isInProgress = task.status === 'IN_PROGRESS';
-const isDone = task.status === 'DONE';
+  const isInProgress = task.status === 'IN_PROGRESS';
+  const isDone = task.status === 'DONE';
+  const comments = task.comments ?? [];
 
-return (
+  const toggleComments = () => {
+    setIsCommentsOpen((prev) => !prev);
+  };
+
+  return (
     <div className={styles.taskCard}>
       <div className={styles.cardContent}>
         <div className={styles.cardHeader}>
           <div>
-            <h3 className={styles.taskTitle}>{task.title}    <span className={`${styles.badge} ${isInProgress ? styles.inProgress : isDone ? styles.done : styles.todo}`}>
-            {isInProgress ? 'En cours' : isDone ? 'Terminé' : 'À faire'}
-          </span></h3>
+            <h3 className={styles.taskTitle}>
+              {task.title}
+              <span
+                className={`${styles.badge} ${
+                  isInProgress ? styles.inProgress : isDone ? styles.done : styles.todo
+                }`}
+              >
+                {isInProgress ? 'En cours' : isDone ? 'Terminé' : 'À faire'}
+              </span>
+            </h3>
             <p className={styles.taskDescription}>{task.description}</p>
           </div>
-          <div className={styles.taskStatusBadge} >
-         
-          </div>
+          <div className={styles.taskStatusBadge}></div>
         </div>
 
-        <div className={styles.cardFooter}>
-          <div className={styles.metaInfo}>
-            {/* Icône Dossier */}
-            <span className={styles.metaItem}>
-              <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
-              </svg>
-              {task.title ? task.title.slice(0, 12) + '...' : 'Général'}
-            </span>
+        <div className={styles.dateContainer}>
+          <span className={styles.metaItem}>
+            Échéance :{' '}
+            <svg className={styles.calendarIcon} viewBox="0 0 24 24">
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+            </svg>
+            {formattedDate}
+          </span>
+        </div>
 
-            {/* Icône Calendrier */}
-            <span className={styles.metaItem}>
-              <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-              </svg>
-              {formattedDate}
-            </span>
-
-            {/* Icône Message / Bulle */}
-            <span className={styles.metaItem}>
-              <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-              </svg>
-              {task.comments ? task.comments.length : 0}
-            </span>
+        <div className={`${styles.cardFooter} ${isCommentsOpen ? styles.cardFooterExpanded : ''}`}>
+          <div className={styles.footerTopRow}>
+            <div className={styles.metaInfo}>
+              <span>Commentaires : {comments.length}</span>
+              <button
+                type="button"
+                className={styles.commentsToggleBtn}
+                onClick={toggleComments}
+                aria-expanded={isCommentsOpen}
+                aria-label={isCommentsOpen ? 'Masquer les commentaires' : 'Afficher les commentaires'}
+              >
+                <svg
+                  className={`${styles.chevron} ${isCommentsOpen ? styles.chevronOpen : ''}`}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          
+          {isCommentsOpen && (
+            <div className={styles.commentsPanel}>
+              {comments.length > 0 ? (
+                <ul className={styles.commentsList}>
+                  {comments.map((comment, index) => {
+                    const authorName =
+                      typeof comment.author === 'string'
+                        ? comment.author
+                        : comment.author?.name || comment.author?.email || 'Utilisateur';
+
+                    return (
+                      <li key={comment.id ?? index} className={styles.commentItem}>
+                        <span className={styles.commentAuthor}>{authorName}</span>
+                        <p className={styles.commentText}>
+                          {typeof comment === 'string' ? comment : comment.content ?? comment.text}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className={styles.emptyComments}>Aucun commentaire pour le moment.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
-
-
 }
