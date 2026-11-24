@@ -10,6 +10,8 @@ export default function ContributorSelector({
   label = 'Contributeurs',
   selectedIds = [],
   onChange,
+  onSelectedUsersChange,
+  allowedIds = null,
   placeholder = 'Choisir un collaborateur à ajouter',
   disabled = false,
 }) {
@@ -56,17 +58,35 @@ export default function ContributorSelector({
   };
 
   const handleRemove = (idToRemove) => {
-    onChange(selectedIds.filter((id) => id !== idToRemove));
+    onChange(selectedIds.filter((id) => String(id) !== String(idToRemove)));
   };
 
-  const selectedUsers = contributorsList.filter((user) =>
-    selectedIds.includes(user.id)
+  const normalizedAllowedIds = Array.isArray(allowedIds)
+    ? allowedIds.map(String)
+    : null;
+
+  const normalizedSelectedIds = selectedIds.map(String);
+
+  const eligibleUsers = normalizedAllowedIds
+    ? contributorsList.filter((user) =>
+        normalizedAllowedIds.includes(String(user.id))
+      )
+    : contributorsList;
+
+  const selectedUsers = eligibleUsers.filter((user) =>
+    normalizedSelectedIds.includes(String(user.id))
+  );
+  useEffect(() => {
+    onSelectedUsersChange?.(selectedUsers);
+  }, [selectedUsers, onSelectedUsersChange]);
+
+  const availableUsers = eligibleUsers.filter(
+    (user) => !normalizedSelectedIds.includes(String(user.id))
+
+    
   );
 
-  // On peut soit garder tous les utilisateurs dans le <select>, soit masquer ceux déjà ajoutés
-  const availableUsers = contributorsList.filter(
-    (user) => !selectedIds.includes(user.id)
-  );
+  
 
   return (
     <div className={styles.inputGroup}>

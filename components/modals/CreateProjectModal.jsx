@@ -13,6 +13,7 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
   const [projectTitle, setProjectTitle] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [selectedContributorIds, setSelectedContributorIds] = useState([]);
+  const [selectedContributors, setSelectedContributors] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,6 +21,7 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
     setProjectTitle('');
     setProjectDescription('');
     setSelectedContributorIds([]);
+    setSelectedContributors([]);
     setError('');
     onClose();
   };
@@ -31,10 +33,14 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
     setSubmitting(true);
     setError('');
 
+    const contributorEmails = selectedContributors
+    .map((user) => user.email?.trim().toLowerCase())
+    .filter(Boolean);
+
     const newProject = {
       name: projectTitle.trim(),
       description: projectDescription.trim(),
-      memberIds: selectedContributorIds,
+      contributors: contributorEmails,
     };
 
     try {
@@ -77,19 +83,13 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
           label="Contributeurs"
           selectedIds={selectedContributorIds}
           onChange={setSelectedContributorIds}
+          onSelectedUsersChange={setSelectedContributors}
         />
 
         {error && <p className={styles.errorText}>{error}</p>}
 
         <div className={styles.actions}>
-          <button
-            type="button"
-            onClick={resetAndClose}
-            className={styles.cancelBtn}
-            disabled={submitting}
-          >
-            Annuler
-          </button>
+          
           <button
             type="submit"
             className={styles.submitBtn}

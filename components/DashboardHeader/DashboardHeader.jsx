@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './DashboardHeader.module.css';
 import TaskList from '../TaskList/TaskList';
 import TaskKanban from '../TaskKanban/TaskKanban';
-import CreateProjectModal from '../CreateProjectModal/CreateProjectModal';
+import CreateProjectModal from '../modals/CreateProjectModal';
 import { useAuth } from '@/app/context/AuthContext';
 // On retire l'import de Kanban pour l'instant
 

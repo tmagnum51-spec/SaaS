@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import styles from './ProjectHeader.module.css';
 import { useAuth } from '@/app/context/AuthContext';
 import { getProjectsByUser } from '@/app/service/api';
-import CreateTaskModal from '../CreateTaskModal/CreateTaskModal';
+import CreateTaskModal from '../modals/CreateTaskModal';
 import { getInitials } from '@/app/utils/getInitials';
 
 export default function ProjectHeader({ projectId }) {
@@ -28,6 +28,10 @@ const totalCount = project?.owner
   ? 1 + otherMembers.length
   : project?.members?.length ?? 0;
 
+  const projectMemberIds = [
+  project?.owner?.id,
+  ...(project?.members ?? []).map((member) => member.user?.id),
+].filter(Boolean);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -100,10 +104,13 @@ const totalCount = project?.owner
               + Crée une tâche
             </button>
           </div>
-          {/* On appelle la modale en lui passant l'état et de quoi la fermer */}
+          {/* On appelle la modale en lui passant l'état, l'id du projet et de quoi la fermer */}
           <CreateTaskModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)} />
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            projectId={id}
+            allowedUserIds={projectMemberIds}
+          />
 
           <div className={styles.contributorsBar}>
             <div className={styles.contributorsLeft}>

@@ -54,9 +54,7 @@ export default function ProjectPage() {
     return <p className={styles.noTasks}>{error}</p>;
   }
 
-  if (tasks.length === 0) {
-    return <p className={styles.noTasks}>Aucune tâche assignée pour ce projet.</p>;
-  }
+
 
   const completedCount = tasks.filter((t) => t.status === 'DONE').length;
   const progressPercent = Math.round((completedCount / tasks.length) * 100);
@@ -115,11 +113,15 @@ export default function ProjectPage() {
           
         </div>
           
+       {filteredTasks.length === 0 ? (
+        <p className={styles.noTasks}>Aucune tâche assignée pour ce projet.</p>
+        ) : (
         <div className={styles.cardsWrapper}>
           {filteredTasks.map((task) => (
             <TaskCard key={task.id} task={task} />
           ))}
         </div>
+      )}
       </div>
     </div>
     </>

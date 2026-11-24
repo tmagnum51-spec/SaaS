@@ -103,9 +103,9 @@
 .dashboardContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 4px;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 100px 
 }
