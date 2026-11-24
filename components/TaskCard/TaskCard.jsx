@@ -1,4 +1,5 @@
 
+import Link from 'next/link';
 import styles from './TaskCard.module.css';
 export default function TaskCard({task}) {
 
@@ -8,6 +9,8 @@ const formattedDate = task.dueDate
 
 const isInProgress = task.status === 'IN_PROGRESS';
 const isDone = task.status === 'DONE';
+const projectId = task.projectId;
+console.log("ce que contient projectId :", projectId);
 
 return (
     <div className={styles.taskCard}>
@@ -50,7 +53,8 @@ return (
             </span>
           </div>
 
-          <button className={styles.viewButton}>Voir</button>
+          <Link className={styles.viewButton}
+            href={`/projects/${projectId}`} >Voir</Link>
         </div>
       </div>
     </div>

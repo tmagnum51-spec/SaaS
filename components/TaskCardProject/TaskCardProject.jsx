@@ -3,18 +3,18 @@ import styles from './TaskCardProject.module.css';
 
 export default function TaskCardProject({ task }) {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
-
   const formattedDate = task.dueDate
     ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
     : 'Aucune date';
-
   const isInProgress = task.status === 'IN_PROGRESS';
   const isDone = task.status === 'DONE';
   const comments = task.comments ?? [];
+  
 
   const toggleComments = () => {
     setIsCommentsOpen((prev) => !prev);
   };
+  
 
   return (
     <div className={styles.taskCard}>

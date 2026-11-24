@@ -17,6 +17,8 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
+  
+
   const resetAndClose = () => {
     setProjectTitle('');
     setProjectDescription('');
@@ -53,6 +55,9 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
       setSubmitting(false);
     }
   };
+    const isFormValid =
+    projectTitle.trim().length > 0 &&
+    projectDescription.trim().length > 0;
 
   return (
     <ModalWrapper
@@ -93,7 +98,7 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
           <button
             type="submit"
             className={styles.submitBtn}
-            disabled={submitting}
+            disabled={submitting || !isFormValid}
           >
             {submitting ? 'Ajout...' : 'Ajouter un projet'}
           </button>
