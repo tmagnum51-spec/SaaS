@@ -69,7 +69,28 @@ export async function createProjects(projectData, token) {
 
   return res.json();
 }
+export async function deleteTask(projectId, taskId, token)  {
+if (!projectId) {
+    throw new Error("L'identifiant du projet est manquant.");
+  }
+    const headers = {'Content-Type': 'application/json',};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const res = await fetch(`http://localhost:8000/projects/${projectId}/tasks/${taskId}`, {
+    method: 'DELETE',
+    headers,
+    credentials: 'include',
+    
+  });
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    throw new Error(errData?.message || `Erreur lors de la suppression (${res.status})`);
+  }
 
+    return res.json();
+
+}
 export async function createTask(projectId, taskData, token) {
 
    if (!projectId) {
@@ -84,18 +105,9 @@ export async function createTask(projectId, taskData, token) {
     headers,
     credentials: 'include',
     body: JSON.stringify(taskData),
+
+    
   });
-
-  // export async function modifyTask(taskId, taskData, token)
-
-  // if (!taskId) {
-  //   throw new Error("L'identifiant de tâche est manquant.");
-  // }
-  // const headers = {'Content-Type': 'application/json',};
-  // if (token) {
-  //   headers.Authorization = `Bearer ${token}`;
-  // }
-  // const res = await fetch(`http://localhost:8000`)
 
   if (!res.ok) {
     const errData = await res.json().catch(() => null);
@@ -103,6 +115,39 @@ export async function createTask(projectId, taskData, token) {
   }
 
   return res.json();
+}
+export async function modifyTask(projectId, taskId, taskData, token) {
+  if (!projectId) {
+    throw new Error("L'identifiant du projet est manquant.");
+  }
+  if (!taskId) {
+    throw new Error("L'identifiant de la tâche est manquant.");
+  }
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(
+    `http://localhost:8000/projects/${projectId}/tasks/${taskId}`,
+    {
+      method: 'PUT',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(taskData),
+    }
+  );
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(
+      data?.message || `Erreur lors de la modification (${res.status})`
+    );
+  }
+
+  return data?.data?.task ?? data?.data ?? data;
 }
 
 export async function getProjectsByUser(token) {
@@ -163,8 +208,3 @@ export async function getProjectsByUser(token) {
   return projectList;
 
 }
-export async function getProjectsById(id) {
-  const res = await fetch("http://localhost:8000/projects", {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  })};

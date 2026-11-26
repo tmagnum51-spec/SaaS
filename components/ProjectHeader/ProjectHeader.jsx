@@ -8,7 +8,7 @@ import { getProjectsByUser } from '@/app/service/api';
 import CreateTaskModal from '../modals/CreateTaskModal';
 import { getInitials } from '@/app/utils/getInitials';
 
-export default function ProjectHeader({ projectId }) {
+export default function ProjectHeader({ projectId, onTaskCreated }) {
   const params = useParams();
   const id = projectId ?? params?.id;
 
@@ -110,6 +110,7 @@ const totalCount = project?.owner
             onClose={() => setIsModalOpen(false)}
             projectId={id}
             allowedUserIds={projectMemberIds}
+            onTaskCreated={onTaskCreated}
           />
 
           <div className={styles.contributorsBar}>

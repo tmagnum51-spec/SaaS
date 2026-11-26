@@ -26,7 +26,6 @@ export default function CreateTaskModal({
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [assigneeIds, setAssigneeIds] = useState([]);
-  const [status, setStatus] = useState('TODO');
   const [priority, setPriority] = useState('MEDIUM');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -63,7 +62,13 @@ export default function CreateTaskModal({
     };
 
     try {
-      const createdTask = await createTask(projectId, newTask, token);
+      const rawResult = await createTask(projectId, newTask, token);
+      const rawTask = rawResult?.data?.task ?? rawResult?.task ?? rawResult;
+      const createdTask =
+        rawTask && typeof rawTask === 'object'
+          ? { status: 'TODO', ...rawTask }
+          : rawTask;
+
       onTaskCreated?.(createdTask);
       resetAndClose();
     } catch (err) {

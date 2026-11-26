@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import styles from './TaskCardProject.module.css';
 
-export default function TaskCardProject({ task }) {
+export default function TaskCardProject({ task, onEdit, onDelete }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const formattedDate = task.dueDate
     ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
@@ -14,7 +15,15 @@ export default function TaskCardProject({ task }) {
   const toggleComments = () => {
     setIsCommentsOpen((prev) => !prev);
   };
-  
+  const handleEditClick = () => {
+    setMenuOpen(false);
+    onEdit?.(task);
+  };
+
+  const handleDeleteClick = () => {
+    setMenuOpen(false);
+    onDelete?.(task);
+  };
 
   return (
     <div className={styles.taskCard}>
@@ -22,7 +31,7 @@ export default function TaskCardProject({ task }) {
         <div className={styles.cardHeader}>
           <div>
             <h3 className={styles.taskTitle}>
-              {task.title}
+              {task.title}  
               <span
                 className={`${styles.badge} ${
                   isInProgress ? styles.inProgress : isDone ? styles.done : styles.todo
@@ -33,7 +42,38 @@ export default function TaskCardProject({ task }) {
             </h3>
             <p className={styles.taskDescription}>{task.description}</p>
           </div>
-          <div className={styles.taskStatusBadge}></div>
+          <div className={styles.actionMenuWrapper}>
+            <button
+            type="button" 
+            className={styles.editDeletebutton} 
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-expanded={menuOpen}>
+            •••            
+            </button>
+            {menuOpen && (
+          <div role="menu" className={styles.actionMenu}>
+            <button
+              type="button"
+              role="menuitem"
+              className={styles.actionMenuItem}
+              onClick={handleEditClick}
+            >
+              Modifier
+            </button>
+
+            {onDelete && (
+              <button
+                type="button"
+                role="menuitem"
+                className={styles.actionMenuItem}
+                onClick={handleDeleteClick}
+              >
+                Supprimer
+              </button>
+          )}
+        </div>
+      )}
+       </div>   
         </div>
 
         <div className={styles.dateContainer}>
