@@ -21,6 +21,10 @@ export default function ProjectPage() {
   const [loadingTasks, setLoadingTasks] = useState(true);
   const [error, setError] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
+  const allowedUserIds = [
+  project?.owner?.id ?? project?.ownerId,
+  ...(project?.members ?? []).map((member) => member?.user?.id ?? member?.userId ?? member?.id),
+].filter(Boolean);
 
   useEffect(() => {
     if (authLoading || !id) return;
@@ -221,7 +225,7 @@ export default function ProjectPage() {
         onClose={() => setEditingTask(null)}
         projectId={id}
         task={editingTask}
-        allowedUserIds={null}
+        allowedUserIds={allowedUserIds}
         onTaskModified={handleTaskEdited}
       />
     </>
