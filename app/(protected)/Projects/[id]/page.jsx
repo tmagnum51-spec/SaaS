@@ -115,7 +115,7 @@ export default function ProjectPage() {
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredTasks = tasks.filter((task) => {
-    const statusMatch = statusFilter === 'ALL' || task.status === statusFilter;
+  const statusMatch = statusFilter === 'ALL' || task.status === statusFilter;
 
     if (!statusMatch) return false;
     if (!normalizedQuery) return true;

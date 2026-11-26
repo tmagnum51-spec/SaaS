@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './TaskCardProject.module.css';
+import { formatDate } from '@/app/utils/formatDate';
+import { getInitials } from '@/app/utils/getInitials';
 
 export default function TaskCardProject({ task, onEdit, onDelete }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,6 +12,7 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
   const isInProgress = task.status === 'IN_PROGRESS';
   const isDone = task.status === 'DONE';
   const comments = task.comments ?? [];
+  const comDate = task.comments?.updatedAt;
   
 
   const toggleComments = () => {
@@ -117,14 +120,30 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
                       typeof comment.author === 'string'
                         ? comment.author
                         : comment.author?.name || comment.author?.email || 'Utilisateur';
+                    const initials = getInitials(authorName);    
+                    const rawDate = comment?.updatedAt || comment?.createdAt;
+                    const comDate = formatDate(rawDate);  
+                        
 
                     return (
-                      <li key={comment.id ?? index} className={styles.commentItem}>
-                        <span className={styles.commentAuthor}>{authorName}</span>
-                        <p className={styles.commentText}>
-                          {typeof comment === 'string' ? comment : comment.content ?? comment.text}
-                        </p>
-                      </li>
+                      <div className={styles.comContainer}>
+                      <div className={styles.authorInitials}>{initials}</div>
+                        <li key={comment.id ?? index} className={styles.commentItem}>
+                          
+                          <div className={styles.commentHeader}>
+                          <span className={styles.commentAuthor}>{authorName}</span>
+                          {comDate && (
+                            <time dateTime={rawDate} className={styles.commentDate}>
+                              {comDate}
+                            </time>
+                          )}
+                          </div>
+                          <p className={styles.commentText}>
+                            {typeof comment === 'string' ? comment : comment.content ?? comment.text}
+                          </p>
+                          
+                        </li>
+                      </div>
                     );
                   })}
                 </ul>

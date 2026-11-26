@@ -6,6 +6,7 @@ import { modifyTask } from '@/app/service/api';
 import ModalWrapper from './ModalWrapper';
 import ContributorSelector from './ContributorSelector';
 import styles from './ModifyTaskModal.module.css';
+import { toUtcIsoString } from '@/app/utils/formatDate';
 
 const PRIORITY_OPTIONS = [
   { value: 'LOW', label: 'faible', variant: 'low' },
@@ -19,11 +20,6 @@ const STATUS_OPTIONS = [
   { value: 'DONE', label: 'Terminée' },
 ];
 
-const toUtcIsoString = (dateInput) => {
-  if (!dateInput) return undefined;
-  const [year, month, day] = dateInput.split('-').map(Number);
-  return new Date(Date.UTC(year, month - 1, day)).toISOString();
-};
 
 const extractAssigneeIds = (taskItem) => {
   const rawList = Array.isArray(taskItem?.assignees)
