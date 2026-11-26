@@ -70,18 +70,32 @@ export default function ProjectPage() {
 
   const handleTaskCreated = (newTask) => {
     if (!newTask) return;
-
     setTasks((prev) => {
       const exists = prev.some((t) => t.id === newTask.id);
       return exists ? prev : [newTask, ...prev];
     });
   };
-
-  const handleTaskEdited = (updatedTask) => {
+ const handleTaskEdited = (updatedTask) => {
     if (!updatedTask) return;
 
     setTasks((prev) =>
       prev.map((t) => (t.id === updatedTask.id ? { ...t, ...updatedTask } : t))
+    );
+  };
+
+  const handleCommentAdded = (taskId, createdComment) => {
+    if (!taskId || !createdComment) return;
+
+    setTasks((prev) =>
+      prev.map((t) => {
+        if (String(t.id) !== String(taskId)) return t;
+
+        const existingComments = Array.isArray(t.comments) ? t.comments : [];
+        return {
+          ...t,
+          comments: [...existingComments, createdComment],
+        };
+      })
     );
   };
 
@@ -186,12 +200,16 @@ export default function ProjectPage() {
                 <TaskCardProject
                   key={task.id}
                   task={task}
+                  projectId={id}
+                  token={token ?? null}
+                  currentUser={user}  
                   onEdit={(taskToEdit) => setEditingTask(taskToEdit)}
                   onDelete={
                     canDeleteTask(task, project, currentUserId)
                       ? handleDeleteTask
                       : undefined
                   }
+                  onCommentAdded={handleCommentAdded}
                 />
               ))}
             </div>

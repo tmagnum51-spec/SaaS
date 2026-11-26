@@ -2,22 +2,65 @@ import { useState } from 'react';
 import styles from './TaskCardProject.module.css';
 import { formatDate } from '@/app/utils/formatDate';
 import { getInitials } from '@/app/utils/getInitials';
+import { addComment } from '@/app/service/api';
 
-export default function TaskCardProject({ task, onEdit, onDelete }) {
+export default function TaskCardProject({
+  task,
+  projectId,
+  token,
+  currentUser,
+  onEdit,
+  onDelete,
+  onCommentAdded,
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
-  const formattedDate = task.dueDate
-    ? new Date(task.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
-    : 'Aucune date';
+  const [commentInput, setCommentInput] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const resolvedProjectId = projectId ?? task.projectId;
+  const formattedDate = formatDate(task.dueDate) || 'Aucune date';
   const isInProgress = task.status === 'IN_PROGRESS';
   const isDone = task.status === 'DONE';
   const comments = task.comments ?? [];
-  const comDate = task.comments?.updatedAt;
-  
+
+  const currentUserName =
+    typeof currentUser === 'string'
+      ? currentUser
+      : currentUser?.name ||
+        currentUser?.fullName ||
+        currentUser?.username ||
+        currentUser?.email ||
+        '';
+  const currentUserInitials = currentUserName ? getInitials(currentUserName) : '?';
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const trimmed = commentInput.trim();
+    if (!trimmed || isSubmitting) return;
+
+    try {
+      setIsSubmitting(true);
+      const createdComment = await addComment(
+        resolvedProjectId,
+        task.id,
+        trimmed,
+        token
+      );
+
+      onCommentAdded?.(task.id, createdComment);
+      setCommentInput('');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const toggleComments = () => {
     setIsCommentsOpen((prev) => !prev);
   };
+
   const handleEditClick = () => {
     setMenuOpen(false);
     onEdit?.(task);
@@ -34,7 +77,7 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
         <div className={styles.cardHeader}>
           <div>
             <h3 className={styles.taskTitle}>
-              {task.title}  
+              {task.title}
               <span
                 className={`${styles.badge} ${
                   isInProgress ? styles.inProgress : isDone ? styles.done : styles.todo
@@ -47,36 +90,37 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
           </div>
           <div className={styles.actionMenuWrapper}>
             <button
-            type="button" 
-            className={styles.editDeletebutton} 
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-expanded={menuOpen}>
-            •••            
+              type="button"
+              className={styles.editDeletebutton}
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-expanded={menuOpen}
+            >
+              •••
             </button>
             {menuOpen && (
-          <div role="menu" className={styles.actionMenu}>
-            <button
-              type="button"
-              role="menuitem"
-              className={styles.actionMenuItem}
-              onClick={handleEditClick}
-            >
-              Modifier
-            </button>
+              <div role="menu" className={styles.actionMenu}>
+                <button
+                  type="button"
+                  role="menuitem"
+                  className={styles.actionMenuItem}
+                  onClick={handleEditClick}
+                >
+                  Modifier
+                </button>
 
-            {onDelete && (
-              <button
-                type="button"
-                role="menuitem"
-                className={styles.actionMenuItem}
-                onClick={handleDeleteClick}
-              >
-                Supprimer
-              </button>
-          )}
-        </div>
-      )}
-       </div>   
+                {onDelete && (
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className={styles.actionMenuItem}
+                    onClick={handleDeleteClick}
+                  >
+                    Supprimer
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className={styles.dateContainer}>
@@ -120,28 +164,25 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
                       typeof comment.author === 'string'
                         ? comment.author
                         : comment.author?.name || comment.author?.email || 'Utilisateur';
-                    const initials = getInitials(authorName);    
+                    const initials = getInitials(authorName);
                     const rawDate = comment?.updatedAt || comment?.createdAt;
-                    const comDate = formatDate(rawDate);  
-                        
+                    const comDate = formatDate(rawDate);
 
                     return (
-                      <div className={styles.comContainer}>
-                      <div className={styles.authorInitials}>{initials}</div>
-                        <li key={comment.id ?? index} className={styles.commentItem}>
-                          
+                      <div key={comment.id ?? index} className={styles.comContainer}>
+                        <div className={styles.authorInitials}>{initials}</div>
+                        <li className={styles.commentItem}>
                           <div className={styles.commentHeader}>
-                          <span className={styles.commentAuthor}>{authorName}</span>
-                          {comDate && (
-                            <time dateTime={rawDate} className={styles.commentDate}>
-                              {comDate}
-                            </time>
-                          )}
+                            <span className={styles.commentAuthor}>{authorName}</span>
+                            {comDate && (
+                              <time dateTime={rawDate} className={styles.commentDate}>
+                                {comDate}
+                              </time>
+                            )}
                           </div>
                           <p className={styles.commentText}>
                             {typeof comment === 'string' ? comment : comment.content ?? comment.text}
                           </p>
-                          
                         </li>
                       </div>
                     );
@@ -150,6 +191,36 @@ export default function TaskCardProject({ task, onEdit, onDelete }) {
               ) : (
                 <p className={styles.emptyComments}>Aucun commentaire pour le moment.</p>
               )}
+<div className={styles.newCommentWrapper}>
+  <div className={styles.comContainer}>
+    <div className={styles.authorInitials}>{currentUserInitials}</div>
+    <form
+      id={`comment-form-${task.id}`}
+      onSubmit={handleCommentSubmit}
+      className={styles.newCommentBox}
+    >
+      <input
+        type="text"
+        className={styles.inputComment}
+        value={commentInput}
+        onChange={(e) => setCommentInput(e.target.value)}
+        placeholder="Ajouter un commentaire..."
+        disabled={isSubmitting}
+      />
+    </form>
+  </div>
+
+  <div className={styles.commentFormFooter}>
+    <button
+      type="submit"
+      form={`comment-form-${task.id}`}
+      className={styles.submitCommentBtn}
+      disabled={isSubmitting || !commentInput.trim()}
+    >
+      {isSubmitting ? 'Envoi...' : 'Envoyer'}
+    </button>
+  </div>
+</div>
             </div>
           )}
         </div>

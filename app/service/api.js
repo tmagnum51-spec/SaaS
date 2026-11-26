@@ -116,6 +116,46 @@ export async function createTask(projectId, taskData, token) {
 
   return res.json();
 }
+export async function addComment(projectId, taskId, content, token = null) {
+  if (!projectId) {
+    throw new Error("L'identifiant du projet est manquant");
+  }
+  if (!taskId) {
+    throw new Error("L'identifiant de la tâche est manquant");
+  }
+  if (!content || !content.trim()) {
+    throw new Error("Le contenu du commentaire est requis");
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(
+    `http://localhost:8000/projects/${projectId}/tasks/${taskId}/comments`,
+    {
+      method: 'POST',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify({ content: content.trim() }),
+    }
+  );
+
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    throw new Error(
+      errData?.message || `Erreur lors de la création (${res.status})`
+    );
+  }
+
+  const json = await res.json();
+  return json?.data?.comment ?? json?.comment ?? json;
+}
+
 export async function modifyTask(projectId, taskId, taskData, token) {
   if (!projectId) {
     throw new Error("L'identifiant du projet est manquant.");

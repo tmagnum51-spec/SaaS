@@ -355,3 +355,97 @@ ace
 .deleteItem:hover {
   background-color: #fef2f2;
 }
+.commentForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+
+
+
+.submitCommentBtn {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.submitCommentBtn:hover:not(:disabled) {
+  background-color: #374151;
+}
+
+.submitCommentBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+.newCommentWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.newCommentBox {
+  flex: 1;
+  min-width: 0;
+  min-height: 76px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: flex-start;
+}
+
+.inputComment {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #1f1f1f;
+  outline: none;
+  padding: 0;
+}
+
+.inputComment::placeholder {
+  color: #4b5563;
+}
+
+.commentFormFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.submitCommentBtn {
+  background-color: #e5e7eb;
+  color: #6b7280;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: not-allowed;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.submitCommentBtn:not(:disabled) {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.submitCommentBtn:not(:disabled):hover {
+  background-color: #374151;
+}
