@@ -231,7 +231,7 @@ ace
 .commentItem {
   padding: 8px 10px;
   border-radius: 6px;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(243, 244, 246, 1);
   flex: 1
 }
 
@@ -400,7 +400,7 @@ ace
   min-height: 76px;
   padding: 14px 18px;
   border-radius: 10px;
-  background-color: #f3f4f6;
+  background-color: rgba(243, 244, 246, 1);
   display: flex;
   align-items: flex-start;
 }

@@ -1,5 +1,6 @@
 const BASE_URL = "http://localhost:8000/api";
 
+// Fonction pour modifier le profile de l'utilisateur depuis le composant Profile
 export async function updateProfile(profileData, token) {
   const headers = {
     'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ export async function updateProfile(profileData, token) {
 
   return data?.data?.user ?? data;
 }
-
+// Recupérer tous les utilisateur pour créer le menu de selection des membre de projets et des assignee de tasks
 export async function getAllUsers(token) {
   const headers = {};
 
@@ -49,7 +50,7 @@ export async function getAllUsers(token) {
 
   return Array.isArray(data?.data?.users) ? data.data.users : [];
 }
-
+// Créer un nouveau projet
 export async function createProjects(projectData, token) {
     const headers = {'Content-Type': 'application/json',};
   if (token) {
@@ -69,6 +70,37 @@ export async function createProjects(projectData, token) {
 
   return res.json();
 }
+//modifier le nom et la description d'un projet existant
+export async function modifyProject(projectId, projectData, token) {
+  if (!projectId) {
+    throw new Error("L'identifiant du projet est manquant.");
+  }
+ 
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(
+    `http://localhost:8000/projects/${projectId}`,
+    {
+      method: 'PUT',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(projectData),
+    }
+    
+  );
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(
+      data?.message || `Erreur lors de la modification (${res.status})`
+    );
+  }
+  return data?.data ?? data?.data?.project ??  null;
+}
+// Supprimer un tache selon les droit qu'on a dessus
 export async function deleteTask(projectId, taskId, token)  {
 if (!projectId) {
     throw new Error("L'identifiant du projet est manquant.");
@@ -91,6 +123,8 @@ if (!projectId) {
     return res.json();
 
 }
+// créer un nouvelle tâche associée à un projet
+
 export async function createTask(projectId, taskData, token) {
 
    if (!projectId) {
@@ -116,6 +150,9 @@ export async function createTask(projectId, taskData, token) {
 
   return res.json();
 }
+
+// Ajouter un commentaire dans le footer des tasks dans TaskCardProject
+
 export async function addComment(projectId, taskId, content, token = null) {
   if (!projectId) {
     throw new Error("L'identifiant du projet est manquant");
@@ -155,6 +192,7 @@ export async function addComment(projectId, taskId, content, token = null) {
   const json = await res.json();
   return json?.data?.comment ?? json?.comment ?? json;
 }
+// Modifier une task depuis le bouton modal de TaskCardProject
 
 export async function modifyTask(projectId, taskId, taskData, token) {
   if (!projectId) {
@@ -189,6 +227,7 @@ export async function modifyTask(projectId, taskId, taskData, token) {
 
   return data?.data?.task ?? data?.data ?? data;
 }
+// Fonction pour récupérer tous les projets où l'utilisateur connecté a une tâche assignée pour le Dashboard
 
 export async function getProjectsByUser(token) {
 

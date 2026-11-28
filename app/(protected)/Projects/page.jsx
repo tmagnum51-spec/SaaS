@@ -30,14 +30,7 @@ import { getProjectsByUser } from '@/app/service/api';
 //   return json?.data?.projects || []; // On extrait directement le tableau grâce au JSON fourni
 // }
 
-//recupérer les taches par projet (terminé / total)
-async function fetchProjectTasks(id) {
-const res = await fetch(`http://localhost:8000/projects/${id}/tasks`)
- if (!res.ok) return null;
-  const json = await res.json();
-  console.log("Données de taches du projet reçues :", json);
-  return json?.data?.tasks || [];
-}
+
 
 async function ProjectsContent() {
   const cookieStore = await cookies();
@@ -57,9 +50,7 @@ async function ProjectsContent() {
 
   return (
     <div className={styles.dashboardContainer}>
-        <div className={styles.dashboardHeader}>
-          <ProjectsHeader />
-        </div>  
+        
       {/* Passage direct des projets au composant */}
       <ProjectsList projects={projects} />
     </div>

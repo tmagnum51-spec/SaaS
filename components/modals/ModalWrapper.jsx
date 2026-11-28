@@ -8,6 +8,7 @@ export default function ModalWrapper({
   onClose,
   title,
   size = 'md',
+  className = '',
   children,
 }) {
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function ModalWrapper({
   return (
     <div className={styles.backdrop} onClick={onClose}>
       <div
-        className={`${styles.modalCard} ${size === 'lg' ? styles.modalLg : ''}`}
+        className={`${styles.modalCard} ${size === 'lg' ? styles.modalLg : ''} ${className}`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

@@ -5,7 +5,7 @@ import CreateProjectModal from '../modals/CreateProjectModal';
 
 // On retire l'import de Kanban pour l'instant
 
-export default function ProjectsHeader() {
+export default function ProjectsHeader({onProjectCreated}) {
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,8 @@ export default function ProjectsHeader() {
             {/* On appelle la modale en lui passant l'état et de quoi la fermer */}
             <CreateProjectModal 
             isOpen={isModalOpen} 
-            onClose={() => setIsModalOpen(false)} />
+            onClose={() => setIsModalOpen(false)} 
+            onProjectCreated={onProjectCreated}/>
 
         </div>
       </div>

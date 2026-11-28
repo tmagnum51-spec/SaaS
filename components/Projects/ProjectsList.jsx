@@ -1,15 +1,26 @@
+'use client'
 import { getInitials } from '@/app/utils/getInitials';
 import styles from './ProjectsList.module.css';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useProjectHandlers } from '@/app/hooks/useProjectTaskHandlers';
+import ProjectHeader from '../ProjectHeader/ProjectHeader';
+import ProjectsHeader from '../ProjectsHeader/ProjectsHeader';
 
 
 export default function ProjectsList({ projects }) {
-  // 1. Si le tableau est vide ou inexistant, on affiche le message et on STOPPE tout ici
-  console.log("🔍 [DEBUG TaskList] Tasks reçues ici :", projects);
-  if (projects === undefined) {
+  const [projectList, setProjectList] = useState(projects);
+  const [error, setError] = useState(null);
+  const {handleProjectCreated} = useProjectHandlers({setProjects:setProjectList, setError,})
+
+  if (error) {
+    return <p className={styles.noTasks}>{error}</p>;
+  
+  }
+  if (projectList === undefined) {
     return <p className={styles.noTasks}>Chargement des projets...</p>;
   }
-  if (projects.length ===0) {
+  if (projectList.length ===0) {
     return <p className={styles.noTasks}> Aucun projet</p>
   }
 
@@ -17,9 +28,11 @@ export default function ProjectsList({ projects }) {
 
   // 2. Si on arrive ici, c'est qu'il y a des projets : on affiche la liste normalement
   return (
+    <>
+    <ProjectsHeader onProjectCreated={handleProjectCreated} /> 
     <div className={styles.projectscontainer}>
       <div className={styles.projectsGrid}>
-        {projects.map((project) => {
+        {projectList.map((project) => {
           // Exemple de calcul ou valeurs par défaut si les tâches ne sont pas encore gérées dans l'API projets
           
           const totalTasks = project.totalTasks ?? 0;
@@ -98,5 +111,6 @@ export default function ProjectsList({ projects }) {
         })}
       </div>
     </div>
+    </>
   );
 }

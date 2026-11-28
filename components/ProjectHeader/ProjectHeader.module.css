@@ -77,7 +77,34 @@
   padding: 5px 12px;
   border-radius: 9999px;
 }
+.modifyLink
+{
 
+}
+.modifyLink {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e06d1b; /* ajuste selon ta couleur d'accent */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.modifyLink:hover {
+  color: #c2570d;
+  text-decoration-thickness: 2px;
+}
+
+.modifyLink:focus-visible {
+  outline: 2px solid #e06d1b;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 .memberAvatar {
   width: 30px;
   height: 30px;

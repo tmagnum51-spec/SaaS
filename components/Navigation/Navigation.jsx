@@ -56,7 +56,7 @@ export default function Navigation() {
           <li>
             <Link 
               href="/projects" 
-              className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}
+              className={`${styles.link} ${pathname === '/projects'|| pathname.startsWith('/projects/') ? styles.active : ''}`}
             >
               
               <svg width="29" height="23" viewBox="0 0 29 23" fill="none" xmlns="http://www.w3.org/2000/svg">

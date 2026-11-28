@@ -6,9 +6,10 @@ import styles from './ProjectHeader.module.css';
 import { useAuth } from '@/app/context/AuthContext';
 import { getProjectsByUser } from '@/app/service/api';
 import CreateTaskModal from '../modals/CreateTaskModal';
+import ModifyProjectModal from '../modals/ModifyProjectModal';
 import { getInitials } from '@/app/utils/getInitials';
 
-export default function ProjectHeader({ projectId, onTaskCreated }) {
+export default function ProjectHeader({ projectId, onTaskCreated, onProjectUpdated }) {
   const params = useParams();
   const id = projectId ?? params?.id;
 
@@ -16,23 +17,20 @@ export default function ProjectHeader({ projectId, onTaskCreated }) {
 
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeModalOpen, setActiveModalOpen] = useState(null);
 
-  
-
-const ownerName = project?.owner?.name || 'Propriétaire';
-const otherMembers = (project?.members ?? []).filter(
-  (member) => member.user?.id && member.user?.id !== project?.owner?.id
-);
-// Si project.owner n'est pas fourni à part, on peut compter project.members.length
-const totalCount = project?.owner
-  ? 1 + otherMembers.length
-  : project?.members?.length ?? 0;
+  const ownerName = project?.owner?.name || 'Propriétaire';
+  const otherMembers = (project?.members ?? []).filter(
+    (member) => member.user?.id && member.user?.id !== project?.owner?.id
+  );
+  const totalCount = project?.owner
+    ? 1 + otherMembers.length
+    : project?.members?.length ?? 0;
 
   const projectMemberIds = [
-  project?.owner?.id,
-  ...(project?.members ?? []).map((member) => member.user?.id),
-].filter(Boolean);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    project?.owner?.id,
+    ...(project?.members ?? []).map((member) => member.user?.id),
+  ].filter(Boolean);
 
   useEffect(() => {
     if (!id) {
@@ -47,10 +45,10 @@ const totalCount = project?.owner
       setLoading(true);
       try {
         const projects = await getProjectsByUser(token);
-        console.log('🔎 id URL :', id, '| projects reçus :', projects);
+
         const foundProject =
           projects?.find((p) => String(p.id) === String(id)) ?? null;
-          console.log('🔎 foundProject :', foundProject);
+        console.log('🔎 foundProject :', foundProject);
 
         if (isMounted) {
           setProject(foundProject);
@@ -71,7 +69,16 @@ const totalCount = project?.owner
     };
   }, [id, authLoading, token]);
 
-  // N'affiche rien s'il n'y a pas d'id de projet
+  const handleProjectUpdated = (updatedProject) => {
+    if (updatedProject) {
+      setProject((prev) => ({
+        ...prev,
+        ...updatedProject,
+      }));
+    }
+    onProjectUpdated?.(updatedProject);
+  };
+
   if (!id) return null;
 
   if (loading) {
@@ -94,20 +101,37 @@ const totalCount = project?.owner
             <div className={styles.TitleDesc}>
               <h1 className={styles.DashboardTitle}>
                 {project?.name ?? 'Projet introuvable'}
+                <button
+                  type="button"
+                  className={styles.modifyLink}
+                  onClick={() => setActiveModalOpen('project')}
+                >
+                modifier
+                </button>
               </h1>
               {project?.description && (
                 <p className={styles.projectDescription}>{project.description}</p>
-                
               )}
             </div>
-            <button className={styles.openButton} onClick={() => setIsModalOpen(true)}>
+            <button
+              type="button"
+              className={styles.openButton}
+              onClick={() => setActiveModalOpen('task')}
+            >
               + Crée une tâche
             </button>
           </div>
-          {/* On appelle la modale en lui passant l'état, l'id du projet et de quoi la fermer */}
+
+          <ModifyProjectModal
+            isOpen={activeModalOpen === 'project'}
+            onClose={() => setActiveModalOpen(null)}
+            project={project}
+            onProjectUpdated={handleProjectUpdated}
+          />
+
           <CreateTaskModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            isOpen={activeModalOpen === 'task'}
+            onClose={() => setActiveModalOpen(null)}
             projectId={id}
             allowedUserIds={projectMemberIds}
             onTaskCreated={onTaskCreated}
@@ -119,10 +143,9 @@ const totalCount = project?.owner
               <span className={styles.contributorsCount}>
                 {totalCount} {totalCount <= 1 ? 'personne' : 'personnes'}
               </span>
-            </div>  
+            </div>
 
             <div className={styles.contributorsRight}>
-              {/* Propriétaire */}
               {project?.owner && (
                 <div className={styles.ownerGroup}>
                   <span className={styles.ownerAvatar}>{getInitials(ownerName)}</span>
@@ -130,7 +153,6 @@ const totalCount = project?.owner
                 </div>
               )}
 
-              {/* Autres membres */}
               {otherMembers.map((member, index) => {
                 const memberName =
                   member.user?.name?.trim() || member.user?.email || 'Membre';

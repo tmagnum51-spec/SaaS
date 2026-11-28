@@ -46,7 +46,11 @@ export default function CreateProjectModal({ isOpen, onClose, onProjectCreated }
     };
 
     try {
-      const createdProject = await createProjects(newProject, token);
+      const response = await createProjects(newProject, token);
+      const createdProject =
+      response?.data?.project ?? response?.project ?? response?.data ?? response;
+
+      
       onProjectCreated?.(createdProject);
       resetAndClose();
     } catch (err) {

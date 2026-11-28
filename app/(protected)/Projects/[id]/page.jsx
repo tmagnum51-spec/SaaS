@@ -8,6 +8,7 @@ import ProjectHeader from '@/components/ProjectHeader/ProjectHeader';
 import ModifyTaskModal from '@/components/modals/ModifyTaskModal';
 import { canDeleteTask } from '@/app/utils/permissions';
 import { deleteTask } from '@/app/service/api';
+import { useProjectTaskHandlers } from '@/app/hooks/useProjectTaskHandlers';
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -72,51 +73,17 @@ export default function ProjectPage() {
     loadProjectAndTasks();
   }, [id, authLoading, user?.id]);
 
-  const handleTaskCreated = (newTask) => {
-    if (!newTask) return;
-    setTasks((prev) => {
-      const exists = prev.some((t) => t.id === newTask.id);
-      return exists ? prev : [newTask, ...prev];
-    });
-  };
- const handleTaskEdited = (updatedTask) => {
-    if (!updatedTask) return;
-
-    setTasks((prev) =>
-      prev.map((t) => (t.id === updatedTask.id ? { ...t, ...updatedTask } : t))
-    );
-  };
-
-  const handleCommentAdded = (taskId, createdComment) => {
-    if (!taskId || !createdComment) return;
-
-    setTasks((prev) =>
-      prev.map((t) => {
-        if (String(t.id) !== String(taskId)) return t;
-
-        const existingComments = Array.isArray(t.comments) ? t.comments : [];
-        return {
-          ...t,
-          comments: [...existingComments, createdComment],
-        };
-      })
-    );
-  };
-
-  const handleDeleteTask = async (taskToDelete) => {
-    if (!taskToDelete?.id) return;
-
-    try {
-      await deleteTask(id, taskToDelete.id, token ?? null);
-
-      setTasks((prev) =>
-        prev.filter((t) => String(t.id) !== String(taskToDelete.id))
-      );
-    } catch (err) {
-      console.error('Erreur lors de la suppression :', err);
-      setError(err.message || 'Impossible de supprimer la tâche.');
-    }
-  };
+ const {
+  handleTaskCreated,
+  handleTaskEdited,
+  handleCommentAdded,
+  handleDeleteTask,
+} = useProjectTaskHandlers({
+  projectId: id,
+  token,
+  setTasks,
+  setError,
+});
 
   if (authLoading || loadingTasks) {
     return <p className={styles.noTasks}>Chargement du projet...</p>;
